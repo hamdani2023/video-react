@@ -10,11 +10,16 @@ function App() {
     { id: 3, name: "Kevin", content: "content Kevin", likes: 30 },
   ]);
 
-  let [userName, setUserName] = useState("hamdani");
+  let [userName, setUserName] = useState("Hamdani");
 
+  const onDelete = (tweetId) => {
+    const filterTweet = tweets.filter((twt) => twt.id !== tweetId);
+    setTweets(filterTweet);
+  };
   return (
     <div>
       <p> User name : {userName} </p>
+      
       <div className="tweet-container">
         {tweets.map((twt) => {
           return (
@@ -23,8 +28,8 @@ function App() {
               name={twt.name}
               content={twt.content}
               likes={twt.likes}
-              onDelete={() => {
-                console.log("Delete", twt.id);
+              onDelete={(id) => {
+                onDelete(twt.id);
               }}
             />
           );
