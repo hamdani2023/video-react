@@ -1,17 +1,17 @@
 import React from "react";
 
-export default function Tweet({ name, content, likes, onDelete }) {
-  const onLike = () => {
-    console.log("Like ", name);
-  };
+export default function Tweet({ id, name, content, likes, onDelete, onLike }) {
+ 
 
   return (
     <div className="tweet">
-      <button onClick={() => onDelete()} className="delete">   ❌
+      <button onClick={() => onDelete()} className="delete">
+        {" "}
+        ❌
       </button>
       <h3>{name}</h3>
       <p>{content}</p>
-      <button onClick={() => onLike()}> {likes} ❤️</button>
+      <button onClick={() => onLike(id)}> {likes} ❤️</button>
     </div>
   );
 }

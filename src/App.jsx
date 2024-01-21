@@ -16,20 +16,58 @@ function App() {
     const filterTweet = tweets.filter((twt) => twt.id !== tweetId);
     setTweets(filterTweet);
   };
+
+  const onLike = (tweetId) => {
+    setTweets((curr) => {
+      const copyTweet = [...curr];
+      const likedTweet = copyTweet.find((tweet) => tweet.id === tweetId);
+      likedTweet.likes += 1;
+      return copyTweet;
+    });
+  };
+
+  const hundleSubmit = (event) => {
+    event.preventDefault();
+    const name = event.target.name.value;
+    const content = event.target.content.value;
+
+    const newTweet = {
+      id: tweets[tweets.length - 1]?.id + 1 ?? 0,
+      name,
+      content,
+      likes: 0,
+    };
+
+    addTweet(newTweet);
+  };
+
+  const addTweet = (tweet) => {
+    setTweets([...tweets, tweet]);
+  };
+
   return (
     <div>
-      <p> User name : {userName} </p>
-      
+      <form onSubmit={hundleSubmit} className="tweet-form" action="">
+        <h4> New tweet</h4>
+        <input placeholder="name" type="text" name="name" />
+        <input placeholder="content" type="text" name="content" />
+        <input type="submit" />
+      </form>
+
       <div className="tweet-container">
         {tweets.map((twt) => {
           return (
             <Tweet
               key={twt.id}
+              id={twt.id}
               name={twt.name}
               content={twt.content}
               likes={twt.likes}
               onDelete={(id) => {
                 onDelete(twt.id);
+              }}
+              onLike={(id) => {
+                onLike(id);
               }}
             />
           );
